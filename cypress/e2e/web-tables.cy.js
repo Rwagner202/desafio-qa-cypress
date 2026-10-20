@@ -9,10 +9,19 @@ describe('Desafio QA - Web Tables', () => {
     cy.get('table tbody tr').should('have.length.at.least', 1);
     cy.get('#addNewRecordButton').should('be.visible');
 
-    // 2. Abrir o formulário
+    // 2. Remover iframes de publicidade que possam cobrir os controles
+    cy.get('body').then(($body) => {
+      $body
+        .find(
+          'iframe[id*="google_ads_iframe"], iframe[data-is-safeframe="true"]'
+        )
+        .remove();
+    });
+
+    // 3. Abrir o formulário
     cy.get('#addNewRecordButton').click();
 
-    // 3. Preencher os campos
+    // 4. Preencher os campos
     cy.get('#firstName').should('be.visible').type('Robert');
     cy.get('#lastName').type('Lourenco');
     cy.get('#userEmail').type(email);
@@ -20,30 +29,37 @@ describe('Desafio QA - Web Tables', () => {
     cy.get('#salary').type('7000');
     cy.get('#department').type('Engenharia');
 
-    // 4. Salvar o registro
+    // 5. Salvar o registro
     cy.get('#submit').click();
 
-    // 5. Confirmar que o registro foi cadastrado
+    // 6. Confirmar o cadastro
     cy.contains('table tbody tr', email).should('be.visible');
 
-    // 6. Editar o registro cadastrado
+    // 7. Editar o registro
     cy.contains('table tbody tr', email).within(() => {
-      cy.get('[title="Edit"]').click();
+      cy.get('[title="Edit"]')
+        .should('be.visible')
+        .scrollIntoView()
+        .click();
     });
 
     cy.get('#firstName').clear().type('Robert Editado');
     cy.get('#submit').click();
 
-    // 7. Confirmar a edição
+    // 8. Confirmar a edição
     cy.contains('table tbody tr', email)
-      .should('contain.text', 'Robert Editado');
+      .should('be.visible')
+      .and('contain.text', 'Robert Editado');
 
-    // 8. Excluir o registro
+    // 9. Excluir o registro
     cy.contains('table tbody tr', email).within(() => {
-      cy.get('[title="Delete"]').click();
+      cy.get('[title="Delete"]')
+        .should('be.visible')
+        .scrollIntoView()
+        .click();
     });
 
-    // 9. Confirmar a exclusão
+    // 10. Confirmar a exclusão
     cy.contains('table tbody tr', email).should('not.exist');
   });
 });
