@@ -1,0 +1,9 @@
+﻿node_modules/
+.vscode/
+cypress/screenshots/
+cypress/videos/
+cypress/downloads/
+.env
+.env.*
+!.env.example
+npm-debug.log*

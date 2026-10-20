@@ -1,0 +1,16 @@
+
+{
+  "name": "desafio-qa-accenture",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Projeto de automação de testes de API e interface com Cypress",
+  "scripts": {
+    "test": "cypress run",
+    "test:api": "cypress run --spec \"cypress/e2e/api.cy.js\"",
+    "test:ui": "cypress run --spec \"cypress/e2e/*.cy.js\"",
+    "cypress:open": "cypress open"
+  },
+  "devDependencies": {
+    "cypress": "^16.2.0"
+  }
+}
