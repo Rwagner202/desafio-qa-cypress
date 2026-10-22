@@ -9,7 +9,7 @@ describe('Desafio QA - API Book Store (Fluxo Completo)', () => {
       password: 'Teste@12345'
     };
 
-    // PASSO 1: Criar Usuário
+    //Criar Usuário
     cy.request({
       method: 'POST',
       url: 'https://demoqa.com/Account/v1/User',
@@ -19,7 +19,7 @@ describe('Desafio QA - API Book Store (Fluxo Completo)', () => {
       userId = respostaCriacao.body.userID;
       cy.log(`1. Usuário criado com ID: ${userId}`);
 
-      // PASSO 2: Gerar Token de Acesso
+      //Gerar Token de Acesso
       return cy.request({
         method: 'POST',
         url: 'https://demoqa.com/Account/v1/GenerateToken',
@@ -31,7 +31,7 @@ describe('Desafio QA - API Book Store (Fluxo Completo)', () => {
       token = respostaToken.body.token;
       cy.log('2. Token gerado com sucesso');
 
-      // PASSO 3: Confirmar Autorização
+      //Confirmar Autorização
       return cy.request({
         method: 'POST',
         url: 'https://demoqa.com/Account/v1/Authorized',
@@ -42,7 +42,7 @@ describe('Desafio QA - API Book Store (Fluxo Completo)', () => {
       expect(respostaAuth.body).to.be.true;
       cy.log('3. Usuário autorizado com sucesso');
 
-      // PASSO 4: Listar os Livros Disponíveis
+      //Listar os Livros Disponíveis
       return cy.request({
         method: 'GET',
         url: 'https://demoqa.com/BookStore/v1/Books'
@@ -57,7 +57,7 @@ describe('Desafio QA - API Book Store (Fluxo Completo)', () => {
       ];
       cy.log(`4. Livros selecionados (ISBN): ${isbnLivros[0]} e ${isbnLivros[1]}`);
 
-      // PASSO 5: Alugar os dois livros escolhidos
+      //Alugar os dois livros escolhidos
       return cy.request({
         method: 'POST',
         url: 'https://demoqa.com/BookStore/v1/Books',
@@ -76,7 +76,7 @@ describe('Desafio QA - API Book Store (Fluxo Completo)', () => {
       expect(respostaAluguel.status).to.eq(201);
       cy.log('5. Livros alugados com sucesso');
 
-      // PASSO 6: Consultar os detalhes do usuário e validar os livros reservados
+      //Consultar os detalhes do usuário e validar os livros reservados
       return cy.request({
         method: 'GET',
         url: `https://demoqa.com/Account/v1/User/${userId}`,
